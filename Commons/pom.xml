@@ -8,17 +8,11 @@
         <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <modules>
-        <module>Commons</module>
-        <module> Person</module>
-        <module>Note</module>
-    </modules>
-    <packaging> pom</packaging>
     <groupId>org.example</groupId>
-    <artifactId>TaskMasterr</artifactId>
+    <artifactId>Commons</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>TaskMasterr</name>
-    <description>TaskMasterr</description>
+    <name>Commons</name>
+    <description>Commons</description>
     <url/>
     <licenses>
         <license/>
@@ -40,23 +34,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version> 42.7.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
