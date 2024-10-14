@@ -23,7 +23,7 @@ public class RabbitMQConsumer {
         this.noteService = noteService;
     }
 
-    @RabbitListener(queues = "${rabbit.person.queue..name}")
+    @RabbitListener(queues = "${rabbit.person.queue.name}")
     public List<NoteDTO> consumeNotesByPersonId(Long personId) {
         LOGGER.info("Received request for notes by personId: {}", personId);
 
