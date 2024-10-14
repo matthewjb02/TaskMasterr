@@ -23,21 +23,9 @@ public class RabbitMQConfig {
     @Value("${rabbit.routing.key}")
     private String routingKey;
 
-    @Value("${rabbit.json.routing.key}")
-    private String jsonRoutingKey;
-
-
-    @Value("${rabbit.json.queue.name}")
-    private String jsonQueueName;
-
     @Bean
     public Queue queue() {
         return new Queue(queueName);
-    }
-
-    @Bean
-    public Queue jsonQueue() {
-        return new Queue(jsonQueueName);
     }
 
     @Bean
@@ -51,16 +39,10 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding jsonBinding(Queue jsonQueue, TopicExchange exchange) {
-        return BindingBuilder.bind(jsonQueue).to(exchange).with(jsonRoutingKey);
-    }
-
-    @Bean
     public MessageConverter converter() {
         return new Jackson2JsonMessageConverter();
 
     }
-
     @Bean
     public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);

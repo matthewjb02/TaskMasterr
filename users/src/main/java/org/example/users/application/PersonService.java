@@ -5,16 +5,20 @@ import org.example.commons.dto.NoteDTO;
 import org.example.commons.dto.PersonDTO;
 import org.example.users.data.PersonRepository;
 import org.example.users.domain.Person;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.example.users.rabbitmq.RabbitMQProducer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
+
 
 @Transactional
 @Service
@@ -22,25 +26,25 @@ public class PersonService {
 
     private final PersonRepository personRepository;
     private final RestTemplate restTemplate;
+    private final RabbitMQProducer rabbitMQProducer;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQProducer.class);
 
 
     @Autowired
-    public PersonService(PersonRepository personRepository, RestTemplate restTemplate) {
+    public PersonService(PersonRepository personRepository, RestTemplate restTemplate, RabbitMQProducer rabbitMQProducer) {
         this.personRepository = personRepository;
         this.restTemplate = restTemplate;
+        this.rabbitMQProducer = rabbitMQProducer;
     }
 
     public List<Long> getNotesByPersonId(Long personId) {
-        String url = "http://localhost:8082/note/person/" + personId;
-        ResponseEntity<List<NoteDTO>> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<NoteDTO>>() {}
-        );
-        List<NoteDTO> notes = response.getBody();
+
+        LOGGER.info("Sending request for notes by personId: {}", personId);
+
+        List<NoteDTO> notes = rabbitMQProducer.requestNotesByPersonId(personId);
         return notes.stream().map(NoteDTO::getId).collect(Collectors.toList());
     }
+
 
     public PersonDTO personIntoDTO(Person person) {
         List<Long> notes = getNotesByPersonId(person.getId());

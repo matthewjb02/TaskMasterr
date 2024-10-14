@@ -1,5 +1,7 @@
 package org.example.note.rabbitmq;
 
+import org.example.commons.dto.NoteDTO;
+import org.example.commons.dto.PersonDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -15,19 +17,17 @@ public class RabbitMQProducer {
     @Value("${rabbit.routing.key}")
     private String routingKey;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQProducer.class);
-
     private final RabbitTemplate rabbitTemplate;
 
     public RabbitMQProducer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
-
-    }
-
-    public void sendMessage(String message) {
-        LOGGER.info("Sending message: {}", message);
-        rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
     }
 
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQProducer.class);
+
+    public void sendUserMessage(NoteDTO note) {
+        LOGGER.info("Sending message: {}", note);
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, note);
+    }
 }
