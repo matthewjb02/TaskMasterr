@@ -1,28 +1,32 @@
 package org.example.taskmasterr.application;
 
-import jakarta.transaction.Transactional;
+
 import org.example.taskmasterr.data.PersonRepository;
 import org.example.taskmasterr.domain.Note;
 import org.example.taskmasterr.domain.Person;
 import org.example.taskmasterr.presentation.dto.PersonDTO;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-@Transactional
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 @Service
 public class PersonService {
 
-    private PersonRepository personRepository;
-    private NoteService noteService;
+    private final NoteService noteService;
+    private final PersonRepository personRepository;
 
+    @Autowired
     public PersonService(PersonRepository personRepository, NoteService noteService) {
         this.personRepository = personRepository;
         this.noteService = noteService;
     }
+
 
     public PersonDTO personIntoDTO(Person person) {
         List<Long> notes = person.getNotes().stream().map(Note::getId).collect(Collectors.toList());

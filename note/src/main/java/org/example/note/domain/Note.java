@@ -1,8 +1,7 @@
-package org.example.taskmasterr.domain;
+package org.example.note.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Note {
@@ -14,17 +13,17 @@ public class Note {
 
     private String text;
 
-    @ManyToOne
-    private Person person;
+
+    private long personId;
 
     public Note() {
     }
 
-    public Note (long id, String title, String text, Person person) {
+    public Note(long id, String title, String text, long personId) {
         this.id = id;
         this.title = title;
         this.text = text;
-        this.person = person;
+        this.personId = personId;
     }
 
     public long getId() {
@@ -39,7 +38,7 @@ public class Note {
         return text;
     }
 
-    public Person getPerson() {
-        return person;
+    public long getPersonId() {
+        return personId;
     }
 }

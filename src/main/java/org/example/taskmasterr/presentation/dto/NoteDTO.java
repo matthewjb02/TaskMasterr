@@ -5,14 +5,16 @@ public class NoteDTO{
     private long id;
     private String title;
     private String content;
+    private Long personId;
 
     public NoteDTO() {
     }
 
-    public NoteDTO(long id, String title, String content) {
+    public NoteDTO(long id, String title, String content, Long personId) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.personId = personId;
     }
 
     public long getId() {
@@ -28,4 +30,7 @@ public class NoteDTO{
         return title;
     }
 
+    public Long getPersonId() {
+        return personId;
+    }
 }

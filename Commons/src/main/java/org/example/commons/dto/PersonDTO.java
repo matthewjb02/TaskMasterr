@@ -1,6 +1,11 @@
-package org.example.taskmasterr.presentation.dto;
+package org.example.commons.dto;
+
+import lombok.Data;
 
 import java.util.List;
+
+
+@Data
 
 public class PersonDTO {
     private long id;
@@ -15,17 +20,5 @@ public class PersonDTO {
         this.id = id;
         this.name = name;
         this.notes = notes;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Long> getNotes() {
-        return notes;
     }
 }

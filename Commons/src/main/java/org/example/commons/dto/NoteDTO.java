@@ -1,18 +1,22 @@
 package org.example.commons.dto;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
-public class NoteDTO {
+@Data
+public class NoteDTO{
 
     private long id;
     private String title;
     private String content;
+    private Long personId;
 
-    public NoteDTO(long id, String title, String content) {
+    public NoteDTO() {
+    }
+
+    public NoteDTO(long id, String title, String content, Long personId) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.personId = personId;
     }
-
 }
